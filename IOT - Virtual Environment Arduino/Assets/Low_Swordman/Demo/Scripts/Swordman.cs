@@ -41,7 +41,6 @@ public class Swordman : PlayerController
     {
 
 
-
         if (Input.GetKeyDown(KeyCode.S))  //아래 버튼 눌렀을때. 
         {
 
@@ -75,6 +74,7 @@ public class Swordman : PlayerController
 
 
         m_MoveX = Input.GetAxis("Horizontal");
+        Debug.Log(m_MoveX);
 
 
    
@@ -118,7 +118,6 @@ public class Swordman : PlayerController
 
         if (Input.GetKey(KeyCode.D))
         {
-
             if (isGrounded)  // 땅바닥에 있었을때. 
             {
 
