@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Healthbar : MonoBehaviour {
 
     // Visible health bar ui:
+    public string barName;
     private Slider healthbarDisplay;
 
     [Header("Main Variables:")]
@@ -35,6 +36,7 @@ public class Healthbar : MonoBehaviour {
     // If 'regenerateHealth' is checked, character will regenerate health/sec at the rate of 'healthPerSecond':
     public bool regenerateHealth;
     public float healthPerSecond;
+    private float timer = 1;
 
     [Space]
 
@@ -62,33 +64,35 @@ public class Healthbar : MonoBehaviour {
     // Every frame:
     private void Update()
     {
-        healthPercentage = int.Parse((Mathf.Round(maximumHealth * (health / 100f))).ToString());
-
-        // If the player's health is below the minimum health, then set it to the minimum health:
-        if (health < minimumHealth)
+        
+        timer -= Time.deltaTime;
+        if (timer <= 0)
         {
-            health = minimumHealth;
-        }
+            timer = 1;
+            healthPercentage = int.Parse((Mathf.Round(maximumHealth * (health / 100f))).ToString());
+            health = PlayerPrefs.GetFloat(barName);
+            // If the player's health is below the minimum health, then set it to the minimum health:
+            if (health < minimumHealth)
+            {
+                health = minimumHealth;
+            }
 
-        // If the player's health is above the maximum health, then set it to the maximum health:
-        if (health > maximumHealth)
-        {
-            health = maximumHealth;
-        }
+            // If the player's health is above the maximum health, then set it to the maximum health:
+            if (health > maximumHealth)
+            {
+                health = maximumHealth;
+            }
+            PlayerPrefs.SetFloat(barName, health);
 
-        // If the character's health is not full and the health regeneration button is ticked, regenerate health/sec at the rate of 'healthPerSecond':
-        if (health < maximumHealth && regenerateHealth)
-        {
-            health += healthPerSecond * Time.deltaTime;
-
-            // Each time the health is changed, update it visibly:
             UpdateHealth();
         }
+        
     }
 
     // Set the health bar to display the same health value as the health variable:
     public void UpdateHealth()
     {
+        health = PlayerPrefs.GetFloat(barName);
         // Change the health bar color acording to how much health the player has:
         if (healthPercentage <= lowHealth && health >= minimumHealth && transform.Find("Bar").GetComponent<Image>().color != lowHealthColor)
         {

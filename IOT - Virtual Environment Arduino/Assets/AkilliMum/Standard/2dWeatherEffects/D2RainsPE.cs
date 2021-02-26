@@ -18,6 +18,7 @@ namespace AkilliMum.Standard.D2WeatherEffects
         public Color Color = new Color(1f, 1f, 1f, 1f);
         [Range(1, 50)]
         public float ParticleMultiplier = 10.0f;
+        public float defaultParticleMultiplier = 10.0f;
         public float Tail = 0.03f;
         public float Speed = 4.0f;
         public float Direction = 0.2f;
@@ -40,6 +41,14 @@ namespace AkilliMum.Standard.D2WeatherEffects
         {
             _difference = CamTransform.position - _firstPosition;
             //_previousPosition = CamTransform.position;
+
+            float playerPrefValue = PlayerPrefs.GetFloat("rain");
+            //Debug.Log(playerPrefValue);
+            if(playerPrefValue > 0.01){
+                ParticleMultiplier = playerPrefValue * defaultParticleMultiplier;
+            }else{
+                ParticleMultiplier = 0;
+            }
         }
 
         void OnRenderImage(RenderTexture source, RenderTexture destination)

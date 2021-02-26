@@ -90,7 +90,7 @@ public class MovementCustom : PlayerController
 
         if (!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
-            //TODO: DISABLED ATTACK
+            
             if (false && Input.GetKey(KeyCode.Mouse0))
             {
 

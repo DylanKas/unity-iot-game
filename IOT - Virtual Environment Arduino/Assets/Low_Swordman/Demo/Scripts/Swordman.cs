@@ -37,6 +37,10 @@ public class Swordman : PlayerController
 
     }
 
+    public void actionInteract(){
+        m_Anim = this.transform.Find("model").GetComponent<Animator>();
+        m_Anim.Play("Attack");
+    }
     public void checkInput()
     {
 
@@ -91,7 +95,7 @@ public class Swordman : PlayerController
             }
             else
             {
-
+                
                 if (m_MoveX == 0)
                 {
                     if (!OnceJumpRayCheck)

@@ -22,6 +22,7 @@ namespace AkilliMum.Standard.D2WeatherEffects
         public float VerticalSpeed = 0f;
         [Range(0.0f,5)]
         public float Density = 2f;
+        public float defaultDensity = 2f;
         //public bool DarkMode = false;
         //public float DarkMultiplier = 1f;
 
@@ -36,6 +37,13 @@ namespace AkilliMum.Standard.D2WeatherEffects
         private void Update()
         {
             _difference = CamTransform.position - _firstPosition;
+            float playerPrefValue = PlayerPrefs.GetFloat("fog");
+            //Debug.Log(playerPrefValue);
+            if(playerPrefValue > 0.01){
+                Density = playerPrefValue * defaultDensity;
+            }else{
+                Density = 0;
+            }
             //_previousPosition = CamTransform.position;
         }
 
